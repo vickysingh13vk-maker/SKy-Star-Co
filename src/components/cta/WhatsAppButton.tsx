@@ -4,16 +4,18 @@ import { Button } from "@/components/ui/Button";
 import { track } from "@/lib/analytics";
 import { whatsappHref } from "@/lib/contact";
 
+type Variant = "solid" | "solid-light" | "outline" | "outline-light";
+
 interface WhatsAppButtonProps {
   location: string;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: Variant;
   className?: string;
   children?: string;
 }
 
 export function WhatsAppButton({
   location,
-  variant = "secondary",
+  variant = "outline",
   className,
   children = "Chat on WhatsApp",
 }: WhatsAppButtonProps) {

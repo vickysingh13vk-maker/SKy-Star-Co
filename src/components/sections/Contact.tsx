@@ -1,88 +1,103 @@
 import { contact, siteConfig } from "@/content/site";
-import { Eyebrow } from "@/components/ui/Eyebrow";
+import { MetaLabel } from "@/components/ui/Meta";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "@/components/ContactForm";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { mailHref, telHref, isEmailConfigured, isPhoneConfigured } from "@/lib/contact";
 
-function ContactDetailRow({ label, children }: { label: string; children: React.ReactNode }) {
+function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border-t border-white/15 py-5 first:border-t-0">
-      <p className="text-xs font-semibold uppercase tracking-label text-white/50">{label}</p>
-      <p className="mt-1.5 text-base text-white">{children}</p>
+    <div className="rule-dark grid gap-1.5 border-b py-5 sm:grid-cols-[9rem,1fr] sm:gap-6">
+      <p className="font-mono text-meta-sm uppercase text-mist/70">{label}</p>
+      <div className="text-body text-bone">{children}</div>
     </div>
   );
 }
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="bg-white py-20 md:py-28">
-      <div className="container-wide">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <Eyebrow>{contact.eyebrow}</Eyebrow>
-              <h2
-                id="contact-heading"
-                className="mt-5 text-balance font-display text-[clamp(1.75rem,1.35rem+2vw,2.75rem)] font-medium leading-[1.1] tracking-tightest text-navy-900"
-              >
-                {contact.headline}
-              </h2>
-              <div className="mt-6 max-w-md space-y-4 text-base leading-relaxed text-muted">
-                {contact.copy.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-            </Reveal>
+    <section id="contact" aria-labelledby="contact-heading" className="lg:grid lg:grid-cols-2">
+      {/* Left: the invitation and the direct routes */}
+      <div className="on-ink bg-ink text-bone">
+        <div className="ml-auto w-full max-w-[760px] px-gutter py-section lg:pr-16">
+          <Reveal>
+            <div className="rule-dark border-t pt-4">
+              <MetaLabel tone="light" tick={false}>
+                <span className="text-brass-light whitespace-nowrap">§ 07</span>
+                <span className="ml-5">{contact.eyebrow}</span>
+              </MetaLabel>
+            </div>
+            <h2 id="contact-heading" className="mt-8 max-w-[12ch] text-display-lg text-bone">
+              {contact.headline}
+            </h2>
+            <div className="mt-7 max-w-prose space-y-4 text-body text-mist">
+              {contact.copy.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </Reveal>
 
-            <Reveal delay={120}>
-              <div className="mt-10 rounded bg-navy-900 p-8">
-                <p className="text-xs font-semibold uppercase tracking-label text-accent-strong">
-                  Contact Sky Star Directly
-                </p>
-
-                <ContactDetailRow label="Email">
+          <Reveal delay={120}>
+            <div className="mt-12">
+              <p className="font-mono text-meta-sm uppercase text-mist/70">Direct contact</p>
+              <div className="mt-5 rule-dark border-t">
+                <DetailRow label="Email">
                   {isEmailConfigured ? (
                     <TrackedLink
                       event="email_click"
                       href={mailHref()}
-                      className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
+                      className="underline decoration-brass decoration-1 underline-offset-4 transition-colors hover:text-brass-light"
                     >
                       {siteConfig.email}
                     </TrackedLink>
                   ) : (
-                    <span className="text-white/60">[TBC — Business Email]</span>
+                    <span className="text-mist">[TBC — Business Email]</span>
                   )}
-                </ContactDetailRow>
-
-                <ContactDetailRow label="Phone / WhatsApp">
+                </DetailRow>
+                <DetailRow label="Phone / WhatsApp">
                   {isPhoneConfigured ? (
                     <TrackedLink
                       event="phone_click"
                       href={telHref()}
-                      className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
+                      className="underline decoration-brass decoration-1 underline-offset-4 transition-colors hover:text-brass-light"
                     >
                       {siteConfig.phone}
                     </TrackedLink>
                   ) : (
-                    <span className="text-white/60">[TBC — Contact Number]</span>
+                    <span className="text-mist">[TBC — Contact Number]</span>
                   )}
-                </ContactDetailRow>
-
-                <ContactDetailRow label="Hong Kong Office">
+                </DetailRow>
+                <DetailRow label="Hong Kong office">
                   {siteConfig.hongKongAddress ?? (
-                    <span className="text-white/60">[TBC — Registered Address]</span>
+                    <span className="text-mist">[TBC — Registered Address]</span>
                   )}
-                </ContactDetailRow>
+                </DetailRow>
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
 
-          <div className="lg:col-span-7 lg:col-start-6">
-            <Reveal delay={80}>
-              <ContactForm />
-            </Reveal>
-          </div>
+      {/* Right: the form itself */}
+      <div className="bg-bone">
+        <div className="mr-auto w-full max-w-[760px] px-gutter py-section lg:pl-16">
+          <Reveal>
+            <div className="rule-light border-t pt-4">
+              <MetaLabel tick={false}>
+                <span className="text-brass-ink">Form</span>
+                <span className="ml-5">Enquiry record</span>
+              </MetaLabel>
+            </div>
+            <h3 className="mt-7 text-display-md text-ink">Send us your requirement</h3>
+            <p className="mt-3 max-w-prose text-body text-steel">
+              Fields marked <span className="text-brass-ink">*</span> are required. The more detail
+              you give, the faster we can come back with something useful.
+            </p>
+          </Reveal>
+
+          <Reveal delay={80} className="mt-10">
+            <ContactForm />
+          </Reveal>
         </div>
       </div>
     </section>

@@ -29,17 +29,24 @@ export function StickyMobileCta() {
     return () => observer.disconnect();
   }, []);
 
-  const show = visible && !overContactForm;
-
   return (
     <div
-      hidden={!show}
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-navy-900/10 bg-white/95 backdrop-blur md:hidden"
+      hidden={!(visible && !overContactForm)}
+      className="on-ink fixed inset-x-0 bottom-0 z-40 border-t border-bone/15 bg-ink/95 backdrop-blur-sm md:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="flex gap-2 px-4 py-3">
-        <QuoteButton location="sticky_mobile" className="flex-[2] px-3 text-xs" />
-        <WhatsAppButton location="sticky_mobile" className="flex-1 px-3 text-xs">
+        <QuoteButton
+          location="sticky_mobile"
+          variant="solid-light"
+          arrow={false}
+          className="min-h-[48px] flex-[2] px-3"
+        />
+        <WhatsAppButton
+          location="sticky_mobile"
+          variant="outline-light"
+          className="min-h-[48px] flex-1 px-3"
+        >
           WhatsApp
         </WhatsAppButton>
       </div>

@@ -137,15 +137,13 @@ export function ContactForm() {
         ref={successRef}
         role="status"
         tabIndex={-1}
-        className="rounded border border-navy-900/15 bg-white p-8 md:p-10"
+        className="rule-light border bg-bone-100 p-8 md:p-10"
       >
-        <p className="text-xs font-semibold uppercase tracking-label text-accent">
-          Enquiry received
-        </p>
-        <h3 className="mt-3 font-display text-2xl font-medium text-navy-900">
+        <p className="font-mono text-meta-sm uppercase text-brass-ink">Enquiry received</p>
+        <h3 className="mt-4 text-display-md text-ink">
           Thank you. Your requirement has been sent.
         </h3>
-        <div className="mt-4 max-w-lg space-y-3 text-base leading-relaxed text-muted">
+        <div className="mt-5 max-w-prose space-y-3 text-body text-steel">
           <p>
             We will review the details you provided and get back to you with the next steps
             {contact.responseTime ? ` within ${contact.responseTime}` : ""}.
@@ -162,15 +160,15 @@ export function ContactForm() {
   return (
     <form noValidate onSubmit={handleSubmit} className="space-y-10">
       {status === "error" && (
-        <div role="alert" className="rounded border border-accent bg-accent-soft/20 p-5">
-          <p className="font-semibold text-navy-900">Your enquiry was not submitted.</p>
-          <p className="mt-1 text-sm leading-relaxed text-ink">
+        <div role="alert" className="border border-signal-error/40 bg-signal-error/5 p-5">
+          <p className="font-mono text-meta-sm uppercase text-signal-error">Your enquiry was not submitted</p>
+          <p className="mt-2 text-body-sm text-steel">
             {serverError} Your details have been kept — please try again, or email us directly
             {isEmailConfigured ? (
               <>
                 {" "}
                 at{" "}
-                <a href={mailHref()} className="font-medium underline underline-offset-2">
+                <a href={mailHref()} className="font-medium text-ink underline underline-offset-4">
                   {mailHref().replace("mailto:", "")}
                 </a>
                 .
@@ -183,7 +181,9 @@ export function ContactForm() {
       )}
 
       <fieldset>
-        <legend className="font-display text-lg font-medium text-navy-900">Your Details</legend>
+        <legend className="rule-light w-full border-b pb-3 font-mono text-meta-sm uppercase text-brass-ink">
+          Section A — Your details
+        </legend>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
           <Field id="fullName" label="Full Name" required error={errors.fullName}>
             <input
@@ -247,7 +247,9 @@ export function ContactForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="font-display text-lg font-medium text-navy-900">Your Requirement</legend>
+        <legend className="rule-light w-full border-b pb-3 font-mono text-meta-sm uppercase text-brass-ink">
+          Section B — Your requirement
+        </legend>
         <div className="mt-6 grid gap-6">
           <Field
             id="requirement"
@@ -336,7 +338,7 @@ export function ContactForm() {
               onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)}
               aria-invalid={Boolean(fileError)}
               aria-describedby={describedBy("file", "helper", fileError)}
-              className="block w-full rounded border border-dashed border-navy-900/25 bg-white px-4 py-3 text-sm text-muted file:mr-4 file:rounded file:border-0 file:bg-navy-900 file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-wideish file:text-white hover:file:bg-navy-700"
+              className="block w-full rounded-sm border border-dashed border-ink/25 bg-bone-100 px-4 py-3.5 text-body-sm text-steel file:mr-4 file:rounded-sm file:border-0 file:bg-ink file:px-4 file:py-2.5 file:font-mono file:text-meta-sm file:uppercase file:text-bone hover:file:bg-ink-800"
             />
           </Field>
         </div>
@@ -352,14 +354,14 @@ export function ContactForm() {
         label={contact.privacyConsent}
       />
 
-      <div className="flex flex-col gap-4 border-t border-navy-900/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <Button type="submit" variant="primary" disabled={status === "submitting"} className="sm:min-w-[240px]">
+      <div className="rule-light flex flex-col gap-6 border-t pt-8 md:flex-row md:items-end md:justify-between">
+        <Button type="submit" variant="solid" arrow={status !== "submitting"} disabled={status === "submitting"} className="md:min-w-[260px]">
           {status === "submitting" ? "Sending…" : contact.submitCta}
         </Button>
 
-        <div className="text-sm text-muted">
-          <p className="font-medium text-navy-900">{contact.whatsappPrompt}</p>
-          <WhatsAppButton location="quote_form" variant="secondary" className="mt-3">
+        <div>
+          <p className="font-mono text-meta-sm uppercase text-steel">{contact.whatsappPrompt}</p>
+          <WhatsAppButton location="quote_form" variant="outline" className="mt-3">
             {contact.whatsappCta}
           </WhatsAppButton>
         </div>

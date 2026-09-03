@@ -15,7 +15,7 @@ export function Header() {
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 40);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -35,14 +35,11 @@ export function Header() {
         toggleRef.current?.focus();
         return;
       }
-
       if (e.key !== "Tab" || !menuRef.current) return;
 
       const focusable = menuRef.current.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled])',
+        "a[href], button:not([disabled])",
       );
-      if (focusable.length === 0) return;
-
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       if (!first || !last) return;
@@ -63,40 +60,47 @@ export function Header() {
     };
   }, [menuOpen]);
 
-  function closeMenu() {
-    setMenuOpen(false);
-  }
+  // Over the dark hero the header is transparent with light type; once the
+  // page scrolls it settles onto bone with ink type.
+  const solid = scrolled || menuOpen;
+  const textColour = solid ? "text-ink" : "text-bone";
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-250 ${
-          scrolled || menuOpen
-            ? "border-navy-900/10 bg-white/95 shadow-subtle backdrop-blur"
-            : "border-transparent bg-white/0"
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,height] duration-400 ease-editorial ${
+          solid ? "border-bone-300 bg-bone/95 backdrop-blur-sm" : "border-transparent bg-transparent"
         }`}
       >
         <div
-          className={`container-wide flex items-center justify-between transition-[height] duration-250 ${
-            scrolled || menuOpen ? "h-16" : "h-20 md:h-[84px]"
+          className={`shell flex items-center justify-between transition-[height] duration-400 ease-editorial ${
+            solid ? "h-16" : "h-20 md:h-[88px]"
           }`}
         >
           <a
             href="#top"
-            className="font-display text-lg font-semibold tracking-tightest text-navy-900 sm:text-xl"
+            className={`font-display text-[1.0625rem] font-semibold uppercase tracking-[0.22em] transition-colors duration-400 sm:text-lg ${textColour}`}
           >
-            SKY STAR
+            Sky
+            <span className={solid ? "text-brass-ink" : "text-brass-light"}>&#8202;·&#8202;</span>
+            Star
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-9">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-sm font-medium text-navy-900/80 transition-colors duration-150 hover:text-navy-900"
+                    className={`group relative block py-2 font-mono text-meta-sm uppercase transition-colors duration-250 ${
+                      solid ? "text-steel hover:text-ink" : "text-bone/75 hover:text-bone"
+                    }`}
                   >
                     {item.label}
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-brass transition-transform duration-250 ease-editorial group-hover:scale-x-100"
+                    />
                   </a>
                 </li>
               ))}
@@ -107,8 +111,9 @@ export function Header() {
             <Button
               as="a"
               href="#contact"
-              variant="primary"
-              className="hidden sm:inline-flex"
+              variant={solid ? "solid" : "outline-light"}
+              arrow
+              className="hidden min-h-[44px] px-5 sm:inline-flex"
               onClick={() => track("quote_cta_click", { location: "header" })}
             >
               Request a Quote
@@ -120,23 +125,25 @@ export function Header() {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               onClick={() => setMenuOpen((v) => !v)}
-              className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded border border-navy-900/15 lg:hidden"
+              className={`flex h-11 w-11 flex-shrink-0 items-center justify-center border transition-colors duration-250 lg:hidden ${
+                solid ? "border-ink/20 text-ink" : "border-bone/30 text-bone"
+              }`}
             >
               <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
-              <span aria-hidden="true" className="relative block h-4 w-5">
+              <span aria-hidden="true" className="relative block h-3.5 w-5">
                 <span
-                  className={`absolute left-0 top-0 h-[1.5px] w-full bg-navy-900 transition-transform duration-200 ${
-                    menuOpen ? "translate-y-[7px] rotate-45" : ""
+                  className={`absolute left-0 top-0 h-[1.5px] w-full bg-current transition-transform duration-250 ${
+                    menuOpen ? "translate-y-[6px] rotate-45" : ""
                   }`}
                 />
                 <span
-                  className={`absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 bg-navy-900 transition-opacity duration-200 ${
+                  className={`absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 bg-current transition-opacity duration-250 ${
                     menuOpen ? "opacity-0" : "opacity-100"
                   }`}
                 />
                 <span
-                  className={`absolute bottom-0 left-0 h-[1.5px] w-full bg-navy-900 transition-transform duration-200 ${
-                    menuOpen ? "-translate-y-[7px] -rotate-45" : ""
+                  className={`absolute bottom-0 left-0 h-[1.5px] w-full bg-current transition-transform duration-250 ${
+                    menuOpen ? "-translate-y-[6px] -rotate-45" : ""
                   }`}
                 />
               </span>
@@ -152,18 +159,22 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-white lg:hidden"
+          className="on-ink fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-ink lg:hidden"
         >
-          <nav aria-label="Mobile" className="container-content flex min-h-full flex-col py-10">
-            <ul className="flex flex-col gap-1">
+          <nav aria-label="Mobile" className="shell flex min-h-full flex-col py-10">
+            <p className="font-mono text-meta-sm uppercase text-mist/70">Navigation</p>
+            <ul className="mt-6 flex flex-col">
               {nav.map((item, index) => (
-                <li key={item.href} className="border-b border-navy-900/10">
+                <li key={item.href} className="rule-dark border-b">
                   <a
                     ref={index === 0 ? firstLinkRef : undefined}
                     href={item.href}
-                    onClick={closeMenu}
-                    className="flex min-h-[56px] items-center text-lg font-medium text-navy-900"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex min-h-[64px] items-baseline gap-5 py-4 text-display-sm text-bone"
                   >
+                    <span className="font-mono text-meta-sm text-brass-light">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {item.label}
                   </a>
                 </li>
@@ -174,10 +185,11 @@ export function Header() {
               <Button
                 as="a"
                 href="#contact"
-                variant="primary"
+                variant="solid-light"
+                arrow
                 onClick={() => {
                   track("quote_cta_click", { location: "mobile_menu" });
-                  closeMenu();
+                  setMenuOpen(false);
                 }}
               >
                 Request a Quote
@@ -187,10 +199,10 @@ export function Header() {
                 href={whatsappHref()}
                 target={whatsappHref() === "#contact" ? undefined : "_blank"}
                 rel={whatsappHref() === "#contact" ? undefined : "noopener noreferrer"}
-                variant="secondary"
+                variant="outline-light"
                 onClick={() => {
                   track("whatsapp_click", { location: "mobile_menu" });
-                  closeMenu();
+                  setMenuOpen(false);
                 }}
               >
                 Chat on WhatsApp

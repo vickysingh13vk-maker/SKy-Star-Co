@@ -4,12 +4,10 @@
 
 @layer base {
   :root {
-    --header-height: 84px;
+    --header-height: 88px;
     --header-height-compact: 64px;
-  }
-
-  * {
-    @apply border-line;
+    --rule-light: #dcd5c8;
+    --rule-dark: rgba(255, 255, 255, 0.16);
   }
 
   html {
@@ -18,18 +16,20 @@
   }
 
   body {
-    @apply bg-paper text-ink font-sans antialiased;
-    font-feature-settings: "cv11", "ss01";
-    text-rendering: optimizeLegibility;
+    @apply bg-bone font-sans text-ink antialiased;
+    font-synthesis-weight: none;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display text-navy-900;
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-medium;
     text-wrap: balance;
   }
 
   ::selection {
-    @apply bg-navy-900 text-white;
+    @apply bg-ink text-bone;
   }
 
   /* Keeps in-page anchor targets clear of the fixed header. */
@@ -39,17 +39,24 @@
   }
 
   :focus-visible {
-    outline: 2px solid theme("colors.navy.900");
+    outline: 2px solid theme("colors.brass.DEFAULT");
     outline-offset: 3px;
-    border-radius: 2px;
   }
 
-  a, button {
+  /* On dark surfaces the brass ring needs a light halo to stay visible. */
+  .on-ink :focus-visible {
+    outline-color: theme("colors.brass.light");
+  }
+
+  a,
+  button {
     -webkit-tap-highlight-color: transparent;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
@@ -59,36 +66,49 @@
 }
 
 @layer components {
-  .container-content {
-    @apply mx-auto w-full max-w-content px-5 xs:px-6 md:px-10 lg:px-12;
-  }
-
-  .container-wide {
-    @apply mx-auto w-full max-w-wide px-5 xs:px-6 md:px-10 lg:px-12;
+  /* Page container carrying the persistent side rails of the grid. */
+  .shell {
+    @apply mx-auto w-full max-w-page px-gutter;
   }
 
   .skip-link {
-    @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded bg-navy-900 px-4 py-3 text-sm font-medium text-white transition-transform duration-200 focus:translate-y-0;
+    @apply fixed left-4 top-4 z-[100] -translate-y-24 bg-ink px-4 py-3 font-mono text-meta-sm uppercase text-bone transition-transform duration-200 focus:translate-y-0;
   }
 
-  /* Scroll reveals are progressive enhancement. Content is only hidden where
-     scripting can reveal it again; with JS off (or in browsers without the
-     `scripting` media feature) everything renders immediately. */
+  /* Hairline rules that read as document structure rather than card edges. */
+  .rule-light {
+    border-color: var(--rule-light);
+  }
+
+  .rule-dark {
+    border-color: var(--rule-dark);
+  }
+
+  /* Fine measurement grid used behind technical plates. */
+  .plate-grid {
+    background-image:
+      linear-gradient(var(--plate-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--plate-line) 1px, transparent 1px);
+    background-size: var(--plate-step) var(--plate-step);
+  }
+
+  /* Scroll reveals are progressive enhancement: content is only hidden where
+     scripting can reveal it again. */
   @media (scripting: enabled) {
     .reveal {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(14px);
     }
 
     .reveal.is-visible {
-      animation: reveal-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: reveal-rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   }
 
-  @keyframes reveal-fade-up {
+  @keyframes reveal-rise {
     from {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(14px);
     }
     to {
       opacity: 1;

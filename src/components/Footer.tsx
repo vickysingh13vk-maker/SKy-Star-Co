@@ -1,87 +1,121 @@
-import { footer as footerContent, nav, siteConfig } from "@/content/site";
+import { footer as footerContent, nav, siteConfig, whatWeDo } from "@/content/site";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { mailHref, telHref, isEmailConfigured, isPhoneConfigured } from "@/lib/contact";
 
 export function Footer() {
   return (
-    <footer className="bg-navy-950 text-white">
-      {/* Extra bottom padding on small screens keeps the sticky mobile CTA
-          from covering the final line of footer content. */}
-      <div className="container-wide pb-32 pt-16 md:py-20">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="font-display text-lg font-semibold tracking-tightest">SKY STAR</p>
-            <p className="mt-3 text-sm font-medium uppercase tracking-wideish text-white/65">
+    <footer className="on-ink bg-ink text-bone">
+      {/* Wordmark band */}
+      <div className="shell rule-dark border-b py-14 md:py-16">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <p className="font-display text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-semibold uppercase leading-none tracking-[0.16em] text-bone">
+              Sky<span className="text-brass-light">&#8202;·&#8202;</span>Star
+            </p>
+            <p className="mt-5 max-w-[34ch] font-mono text-meta uppercase text-mist">
               {siteConfig.tagline}
             </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
-              {footerContent.description}
-            </p>
           </div>
-
-          <div className="lg:col-span-3 lg:col-start-6">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">
-              Navigation
-            </p>
-            <ul className="mt-4 space-y-3">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-sm text-white/75 transition-colors duration-150 hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-3">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">Contact</p>
-            <ul className="mt-4 space-y-3 text-sm text-white/75">
-              <li>
-                {isEmailConfigured ? (
-                  <TrackedLink event="email_click" href={mailHref()} className="hover:text-white">
-                    {siteConfig.email}
-                  </TrackedLink>
-                ) : (
-                  "[TBC — Business Email]"
-                )}
-              </li>
-              <li>
-                {isPhoneConfigured ? (
-                  <TrackedLink event="phone_click" href={telHref()} className="hover:text-white">
-                    {siteConfig.phone}
-                  </TrackedLink>
-                ) : (
-                  "[TBC — Phone / WhatsApp]"
-                )}
-              </li>
-              <li>{siteConfig.hongKongAddress ?? "[TBC — Hong Kong Address]"}</li>
-            </ul>
-          </div>
-
-          <div className="lg:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">Legal</p>
-            <ul className="mt-4 space-y-3 text-sm text-white/65">
-              {footerContent.legalLinks.map((label) => (
-                <li key={label} title="Page pending — content not yet published">
-                  {label}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            Sky Star {siteConfig.legalCompanyName ?? "[TBC — Legal Company Name]"} ·{" "}
-            {footerContent.registeredStatement} · Registration Number:{" "}
-            {siteConfig.registrationNumber ?? "[TBC]"}
+          <p className="max-w-prose text-body-sm text-mist lg:col-span-5">
+            {footerContent.description}
           </p>
-          <p>{footerContent.copyright}</p>
         </div>
+      </div>
+
+      {/* Directory */}
+      <div className="shell grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <nav aria-label="Footer" className="lg:col-span-3">
+          <p className="font-mono text-meta-sm uppercase text-mist/70">Navigation</p>
+          <ul className="mt-5 space-y-3">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="text-body-sm text-bone/80 transition-colors duration-250 hover:text-brass-light"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="lg:col-span-3">
+          <p className="font-mono text-meta-sm uppercase text-mist/70">Services</p>
+          <ul className="mt-5 space-y-3">
+            {whatWeDo.services.map((service) => (
+              <li key={service.heading} className="text-body-sm text-bone/80">
+                {service.heading}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <p className="font-mono text-meta-sm uppercase text-mist/70">Contact</p>
+          <ul className="mt-5 space-y-3 text-body-sm text-bone/80">
+            <li>
+              {isEmailConfigured ? (
+                <TrackedLink
+                  event="email_click"
+                  href={mailHref()}
+                  className="transition-colors duration-250 hover:text-brass-light"
+                >
+                  {siteConfig.email}
+                </TrackedLink>
+              ) : (
+                "[TBC — Business Email]"
+              )}
+            </li>
+            <li>
+              {isPhoneConfigured ? (
+                <TrackedLink
+                  event="phone_click"
+                  href={telHref()}
+                  className="transition-colors duration-250 hover:text-brass-light"
+                >
+                  {siteConfig.phone}
+                </TrackedLink>
+              ) : (
+                "[TBC — Phone / WhatsApp]"
+              )}
+            </li>
+            <li>{siteConfig.hongKongAddress ?? "[TBC — Hong Kong Address]"}</li>
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <p className="font-mono text-meta-sm uppercase text-mist/70">Legal</p>
+          {/* Rendered as text, not links: these pages are not published yet. */}
+          <ul className="mt-5 space-y-3 text-body-sm text-mist">
+            {footerContent.legalLinks.map((label) => (
+              <li key={label}>{label}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Company record */}
+      <div className="shell rule-dark border-t py-8">
+        <dl className="grid gap-6 font-mono text-meta-sm uppercase text-mist/70 md:grid-cols-3">
+          <div>
+            <dt>Registered entity</dt>
+            <dd className="mt-1.5 text-mist">
+              Sky Star {siteConfig.legalCompanyName ?? "[TBC — Legal Company Name]"}
+            </dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd className="mt-1.5 text-mist">{footerContent.registeredStatement}</dd>
+          </div>
+          <div>
+            <dt>Registration no.</dt>
+            <dd className="mt-1.5 text-mist">{siteConfig.registrationNumber ?? "[TBC]"}</dd>
+          </div>
+        </dl>
+        <p className="mt-8 pb-24 font-mono text-meta-sm uppercase text-mist md:pb-0">
+          {footerContent.copyright}
+        </p>
       </div>
     </footer>
   );

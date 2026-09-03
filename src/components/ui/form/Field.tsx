@@ -10,39 +10,53 @@ interface FieldProps {
   className?: string;
 }
 
+/** Shared input chrome. Fields are labelled like entries on a trade document. */
 export const inputClasses =
-  "block w-full rounded border border-navy-900/20 bg-white px-4 py-3 text-base text-ink placeholder:text-muted/70 transition-colors duration-150 focus:border-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-900/30 aria-[invalid=true]:border-accent aria-[invalid=true]:bg-accent-soft/10";
+  "block w-full rounded-sm border border-ink/15 bg-bone-100 px-4 py-3.5 text-body text-ink placeholder:text-steel/60 transition-colors duration-250 focus:border-brass focus:outline-none focus-visible:ring-2 focus-visible:ring-brass/30 aria-[invalid=true]:border-signal-error";
 
-export function Field({ id, label, required, helperText, error, children, className = "" }: FieldProps) {
+export function Field({
+  id,
+  label,
+  required,
+  helperText,
+  error,
+  children,
+  className = "",
+}: FieldProps) {
   const helperId = helperText ? `${id}-helper` : undefined;
   const errorId = error ? `${id}-error` : undefined;
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-2 block text-sm font-semibold text-navy-900">
+      <label
+        htmlFor={id}
+        className="mb-2.5 flex items-baseline gap-2 font-mono text-meta-sm uppercase text-ink"
+      >
         {label}
         {required ? (
-          <span className="ml-1 text-accent" aria-hidden="true">
+          <span className="text-brass-ink" aria-hidden="true">
             *
           </span>
         ) : (
-          <span className="ml-2 text-xs font-normal uppercase tracking-wideish text-muted">
-            Optional
-          </span>
+          <span className="text-steel">(optional)</span>
         )}
       </label>
 
-      {children /* the input must receive aria-describedby={helperId} and aria-invalid via cloneless composition in the parent */}
+      {children}
 
       {helperText && !error && (
-        <p id={helperId} className="mt-2 text-sm text-muted">
+        <p id={helperId} className="mt-2 text-body-sm text-steel">
           {helperText}
         </p>
       )}
 
       {error && (
-        <p id={errorId} role="alert" className="mt-2 flex items-start gap-1.5 text-sm font-medium text-accent">
-          <span aria-hidden="true">⚠</span>
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-2 flex items-start gap-2 text-body-sm font-medium text-signal-error"
+        >
+          <span aria-hidden="true">▲</span>
           {error}
         </p>
       )}
@@ -51,8 +65,7 @@ export function Field({ id, label, required, helperText, error, children, classN
 }
 
 export function describedBy(id: string, helperText?: string, error?: string): string | undefined {
-  const ids = [];
-  if (error) ids.push(`${id}-error`);
-  else if (helperText) ids.push(`${id}-helper`);
-  return ids.length ? ids.join(" ") : undefined;
+  if (error) return `${id}-error`;
+  if (helperText) return `${id}-helper`;
+  return undefined;
 }

@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Sky Star design tokens.
+ *
+ * Visual language: trade documentation. Deep ink navy against warm bone paper,
+ * hairline rules, monospaced reference metadata, large editorial numerals, and
+ * a single brass signal colour used sparingly. Every value below is contrast
+ * checked against the surface it is intended to sit on.
+ */
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
@@ -14,59 +22,79 @@ const config: Config = {
     },
     extend: {
       colors: {
-        navy: {
-          950: "#081625",
-          900: "#0E2A47",
-          800: "#123353",
-          700: "#1B4470",
-          600: "#2C5786",
+        // Dark surfaces
+        ink: {
+          DEFAULT: "#0A1A2B",
+          900: "#0A1A2B",
+          800: "#12304A",
+          700: "#17384F",
+          600: "#22506E",
         },
-        ink: "#1C1F23",
-        muted: "#5C6573",
-        line: "#E1E5EA",
-        paper: "#F4F6F8",
-        cream: "#FAF8F4",
-        accent: {
-          // Text-safe accent (AA on white and on paper). accent-strong is for
-          // fills and marks on dark surfaces only.
-          DEFAULT: "#B0561B",
-          strong: "#E8842C",
-          soft: "#F2D8BE",
+        // Light surfaces (warm, not cool grey)
+        bone: {
+          DEFAULT: "#F5F1EA",
+          100: "#FBF9F5",
+          200: "#EAE4D9",
+          300: "#DCD5C8",
+        },
+        // Secondary text on light surfaces (AA on bone and bone-200)
+        steel: "#50606F",
+        // Single accent. `brass` is safe on ink; `brass-ink` is the text-safe
+        // variant for light surfaces.
+        brass: {
+          DEFAULT: "#B98A2E",
+          light: "#D9A441",
+          ink: "#7A571A",
+        },
+        // Secondary text on ink surfaces
+        mist: "#A9B8C4",
+        signal: {
+          error: "#97331F",
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "-apple-system", "Segoe UI", "sans-serif"],
-        display: ["var(--font-inter-tight)", "-apple-system", "Segoe UI", "sans-serif"],
+        display: ["var(--font-display)", "Archivo", "Helvetica Neue", "sans-serif"],
+        sans: ["var(--font-body)", "IBM Plex Sans", "Segoe UI", "sans-serif"],
+        mono: ["var(--font-mono)", "IBM Plex Mono", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        // Fluid editorial scale
+        "display-xl": ["clamp(2.5rem, 1.55rem + 4.2vw, 5.25rem)", { lineHeight: "0.98", letterSpacing: "-0.035em" }],
+        "display-lg": ["clamp(2rem, 1.4rem + 2.6vw, 3.5rem)", { lineHeight: "1.04", letterSpacing: "-0.03em" }],
+        "display-md": ["clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        "display-sm": ["clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem)", { lineHeight: "1.2", letterSpacing: "-0.015em" }],
+        // Oversized numerals used as structure
+        numeral: ["clamp(2.5rem, 1.8rem + 3vw, 4.25rem)", { lineHeight: "0.9", letterSpacing: "-0.04em" }],
+        "numeral-sm": ["clamp(1.5rem, 1.2rem + 1.2vw, 2rem)", { lineHeight: "0.9", letterSpacing: "-0.03em" }],
+        // Copy
+        lede: ["clamp(1.0625rem, 1rem + 0.35vw, 1.25rem)", { lineHeight: "1.6" }],
+        body: ["1rem", { lineHeight: "1.65" }],
+        "body-sm": ["0.9375rem", { lineHeight: "1.6" }],
+        // Monospaced trade metadata
+        meta: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.16em" }],
+        "meta-sm": ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.18em" }],
       },
       maxWidth: {
-        content: "1280px",
-        wide: "1440px",
+        page: "1440px",
+        prose: "62ch",
       },
       borderRadius: {
-        sm: "2px",
-        DEFAULT: "4px",
-        md: "6px",
-        lg: "8px",
-      },
-      boxShadow: {
-        subtle: "0 1px 2px rgba(14, 42, 71, 0.06)",
-        card: "0 4px 16px rgba(14, 42, 71, 0.08)",
-        raised: "0 12px 32px rgba(8, 22, 37, 0.14)",
-      },
-      transitionDuration: {
-        150: "150ms",
-        250: "250ms",
-        400: "400ms",
+        none: "0",
+        DEFAULT: "2px",
+        sm: "1px",
       },
       spacing: {
-        "18": "4.5rem",
-        "22": "5.5rem",
-        "30": "7.5rem",
+        section: "clamp(4.5rem, 3rem + 6vw, 9rem)",
+        "section-sm": "clamp(3rem, 2rem + 4vw, 6rem)",
+        gutter: "clamp(1.25rem, 0.5rem + 2.5vw, 3.5rem)",
       },
-      letterSpacing: {
-        tightest: "-0.03em",
-        wideish: "0.08em",
-        label: "0.14em",
+      transitionTimingFunction: {
+        editorial: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      transitionDuration: {
+        250: "250ms",
+        400: "400ms",
+        600: "600ms",
       },
     },
   },
