@@ -52,6 +52,53 @@ src/
     quote-schema.ts   Validation rules shared by client and server
 ```
 
+## Deployment
+
+Standard Next.js app — any host that runs Node 20+ works. It needs a Node
+runtime rather than static hosting, because `/api/quote` handles form posts.
+
+### Vercel (recommended)
+
+1. vercel.com → **Add New Project** → import this repository.
+2. Framework preset, build command and output directory are detected
+   automatically. Nothing to configure.
+3. Add the environment variables from `.env.example` under
+   **Settings → Environment Variables**.
+4. Attach the domain under **Settings → Domains**.
+
+Every pull request then gets its own preview URL, and merges to `main` deploy
+to production.
+
+### Netlify / Cloudflare Pages
+
+Build command `npm run build`, Node version from `.nvmrc`, and the platform's
+Next.js adapter (Netlify installs `@netlify/plugin-nextjs` automatically).
+
+### Self-hosted
+
+```bash
+npm ci && npm run build
+npm start          # listens on $PORT, default 3000
+```
+
+Run it behind a reverse proxy that terminates TLS. Security headers
+(`X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
+`X-Frame-Options`, HSTS) are set by the app in `next.config.mjs`, so they apply
+on every host.
+
+### Environment variables
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Before launch | Canonical URL, Open Graph, sitemap, robots |
+| `QUOTE_NOTIFICATION_EMAIL` | For the form | Where enquiry notifications are delivered |
+| `EMAIL_PROVIDER_API_KEY` | For the form | Credential for the email provider (server-side only) |
+
+### CI
+
+`.github/workflows/ci.yml` runs typecheck, lint and build on every pull request
+and on pushes to `main`.
+
 ## Content rules (from the brief)
 
 - No invented clients, testimonials, statistics, certifications or claims.

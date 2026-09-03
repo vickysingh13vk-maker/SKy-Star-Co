@@ -5,7 +5,9 @@ export const siteConfig = {
   name: "Sky Star",
   brand: "SKY STAR",
   tagline: "Trading & sourcing from requirement to delivery.",
-  url: "https://www.skystar.example", // [TBC] production domain
+  // Set NEXT_PUBLIC_SITE_URL in the host's environment to the live domain.
+  // Used for the canonical URL, Open Graph tags, sitemap and robots.txt.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.skystar.example", // [TBC] production domain
   email: null as string | null, // [TBC — Business Email]
   phone: null as string | null, // [TBC — Contact Number]
   whatsappNumber: null as string | null, // [TBC — WhatsApp number, digits only for wa.me link]
