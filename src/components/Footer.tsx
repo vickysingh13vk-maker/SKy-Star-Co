@@ -1,17 +1,25 @@
 import { footer as footerContent, nav, siteConfig, whatWeDo } from "@/content/site";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { mailHref, telHref, isEmailConfigured, isPhoneConfigured } from "@/lib/contact";
+import { Wordmark } from "@/components/ui/Wordmark";
+import { getBrandArtwork } from "@/lib/brand";
 
 export function Footer() {
+  const brand = getBrandArtwork();
+
   return (
     <footer className="on-ink bg-ink text-bone">
       {/* Wordmark band */}
       <div className="shell rule-dark border-b py-14 md:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <p className="font-display text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-semibold uppercase leading-none tracking-[0.16em] text-bone">
-              Sky<span className="text-brass-light">&#8202;·&#8202;</span>Star
-            </p>
+            {brand.light ? (
+              <Wordmark src={brand.light} tone="light" height={72} />
+            ) : (
+              <p className="font-display text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-semibold uppercase leading-none tracking-[0.16em] text-bone">
+                Sky<span className="text-brass-light">&#8202;·&#8202;</span>Star
+              </p>
+            )}
             <p className="mt-5 max-w-[34ch] font-mono text-meta uppercase text-mist">
               {siteConfig.tagline}
             </p>

@@ -1,13 +1,33 @@
+import fs from "node:fs";
+import path from "node:path";
 import Image from "next/image";
 import type { MediaSlot } from "@/content/media";
 import { TechnicalPlate, type PlateTone } from "./TechnicalPlate";
+
+/**
+ * Resolves whether a slot has a usable photograph.
+ *
+ * Remote URLs (Unsplash/Pexels/Pixabay, allowed in next.config.mjs) are taken
+ * on trust. Local paths are checked against /public at render time, so a slot
+ * whose file has not been added yet falls back to its drawing instead of
+ * shipping a broken image. Drop the file in and it switches over on the next
+ * build with no code change.
+ */
+function resolvePhoto(src: string | null): string | null {
+  if (!src) return null;
+  if (/^https?:\/\//.test(src)) return src;
+  try {
+    return fs.existsSync(path.join(process.cwd(), "public", src)) ? src : null;
+  } catch {
+    return null;
+  }
+}
 
 interface TradeImageProps {
   slot: MediaSlot;
   /** CSS aspect-ratio for the frame, e.g. "4 / 5". */
   ratio?: string;
   tone?: PlateTone;
-  /** Show the metadata strip beneath the frame. */
   meta?: boolean;
   priority?: boolean;
   sizes?: string;
@@ -16,9 +36,10 @@ interface TradeImageProps {
 }
 
 /**
- * The one image frame used across the page: a cropped plate or photograph with
- * corner registration marks and optional trade metadata. Keeping the frame in
- * one component is what lets photography replace drawings with no layout work.
+ * The one image frame used across the page: a photograph (or, until one
+ * exists, a drawn plate) with corner registration marks and optional trade
+ * metadata. Keeping the frame in one component is what lets photography
+ * replace drawings with no layout work.
  */
 export function TradeImage({
   slot,
@@ -30,17 +51,15 @@ export function TradeImage({
   className = "",
   frameClassName = "",
 }: TradeImageProps) {
+  const photo = resolvePhoto(slot.src);
   const markColour = tone === "dark" ? "border-brass" : "border-brass-ink";
 
   return (
     <figure className={className}>
-      <div
-        className={`relative overflow-hidden ${frameClassName}`}
-        style={{ aspectRatio: ratio }}
-      >
-        {slot.src ? (
+      <div className={`relative overflow-hidden ${frameClassName}`} style={{ aspectRatio: ratio }}>
+        {photo ? (
           <Image
-            src={slot.src}
+            src={photo}
             alt={slot.alt}
             fill
             sizes={sizes}
@@ -54,7 +73,6 @@ export function TradeImage({
           </>
         )}
 
-        {/* registration marks */}
         <span
           aria-hidden="true"
           className={`pointer-events-none absolute left-4 top-4 h-4 w-4 border-l-2 border-t-2 ${markColour}`}
@@ -77,4 +95,9 @@ export function TradeImage({
       )}
     </figure>
   );
+}
+
+/** Same resolution rule, for backgrounds that are not framed. */
+export function resolveSlotPhoto(slot: MediaSlot): string | null {
+  return resolvePhoto(slot.src);
 }

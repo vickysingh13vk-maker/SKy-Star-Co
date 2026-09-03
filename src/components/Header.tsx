@@ -5,8 +5,10 @@ import { nav } from "@/content/site";
 import { Button } from "./ui/Button";
 import { track } from "@/lib/analytics";
 import { whatsappHref } from "@/lib/contact";
+import { Wordmark } from "./ui/Wordmark";
+import type { BrandArtwork } from "@/lib/brand";
 
-export function Header() {
+export function Header({ brand }: { brand: BrandArtwork }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -77,13 +79,13 @@ export function Header() {
             solid ? "h-16" : "h-20 md:h-[88px]"
           }`}
         >
-          <a
-            href="#top"
-            className={`font-display text-[1.0625rem] font-semibold uppercase tracking-[0.22em] transition-colors duration-400 sm:text-lg ${textColour}`}
-          >
-            Sky
-            <span className={solid ? "text-brass-ink" : "text-brass-light"}>&#8202;·&#8202;</span>
-            Star
+          <a href="#top" className={`flex items-center ${textColour}`} aria-label="Sky Star — home">
+            <Wordmark
+              src={solid ? brand.dark : brand.light}
+              tone={solid ? "dark" : "light"}
+              height={solid ? 30 : 36}
+              className="text-[1.0625rem] transition-all duration-400 sm:text-lg"
+            />
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
@@ -162,7 +164,8 @@ export function Header() {
           className="on-ink fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-ink lg:hidden"
         >
           <nav aria-label="Mobile" className="shell flex min-h-full flex-col py-10">
-            <p className="font-mono text-meta-sm uppercase text-mist/70">Navigation</p>
+            <Wordmark src={brand.light} tone="light" height={34} className="text-lg" />
+            <p className="mt-8 font-mono text-meta-sm uppercase text-mist/70">Navigation</p>
             <ul className="mt-6 flex flex-col">
               {nav.map((item, index) => (
                 <li key={item.href} className="rule-dark border-b">

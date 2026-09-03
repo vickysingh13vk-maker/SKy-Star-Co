@@ -10,11 +10,14 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
+import { getBrandArtwork } from "@/lib/brand";
 
 export default function Home() {
+  const brand = getBrandArtwork();
+
   return (
     <>
-      <Header />
+      <Header brand={brand} />
       <main id="main-content">
         <Hero />
         <TrustStrip />
