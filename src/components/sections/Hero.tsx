@@ -88,8 +88,8 @@ function RoutingStrip() {
  * statement comes first on ink and the photograph follows as its own band, so
  * the image keeps its detail instead of being buried under a heavy overlay.
  *
- * Without one: a split composition with the drawn plate framed on the right,
- * which reads as intended artwork rather than a stretched background.
+ * Without one: a split composition with the blank placeholder framed on the
+ * right, so the layout is final before the photography arrives.
  */
 export function Hero() {
   const photo = resolveSlotPhoto(media.hero);
