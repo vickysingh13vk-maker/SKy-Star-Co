@@ -3,15 +3,24 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function TrustStrip() {
   return (
-    <section aria-label="Why buyers work with Sky Star" className="border-y border-navy-900/10 bg-white">
-      <div className="container-wide">
-        <ul className="grid divide-y divide-navy-900/10 sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
+    <section
+      aria-label="Why buyers work with Sky Star"
+      className="on-dark relative overflow-hidden bg-navy-950 text-white"
+    >
+      <div className="rule-grid-dark pointer-events-none absolute inset-0" aria-hidden="true" />
+
+      <div className="container-wide relative">
+        <ul className="grid border-t border-white/15 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-x-12">
           {trustStrip.map((item, index) => (
-            <Reveal as="li" key={item.title} delay={index * 80} className="px-1 py-8 md:px-8">
-              <p className="font-display text-sm font-semibold uppercase tracking-wideish text-navy-900">
-                {item.title}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{item.copy}</p>
+            <Reveal
+              as="li"
+              key={item.title}
+              delay={index * 80}
+              className="border-b border-white/12 py-9 sm:py-10 lg:border-b-0 lg:py-12"
+            >
+              <span className="mb-5 block h-px w-7 bg-accent-strong" aria-hidden="true" />
+              <p className="meta text-white">{item.title}</p>
+              <p className="mt-3 max-w-[30ch] text-sm leading-relaxed text-white/65">{item.copy}</p>
             </Reveal>
           ))}
         </ul>

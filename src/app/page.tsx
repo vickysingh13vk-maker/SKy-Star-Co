@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { WhatWeDo } from "@/components/sections/WhatWeDo";
 import { WhatWeSource } from "@/components/sections/WhatWeSource";
+import { Brands } from "@/components/sections/Brands";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { WhySkyStar } from "@/components/sections/WhySkyStar";
 import { About } from "@/components/sections/About";
@@ -20,6 +21,7 @@ export default function Home() {
         <TrustStrip />
         <WhatWeDo />
         <WhatWeSource />
+        <Brands />
         <HowItWorks />
         <WhySkyStar />
         <About />

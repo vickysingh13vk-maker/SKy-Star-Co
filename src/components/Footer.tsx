@@ -4,14 +4,14 @@ import { mailHref, telHref, isEmailConfigured, isPhoneConfigured } from "@/lib/c
 
 export function Footer() {
   return (
-    <footer className="bg-navy-950 text-white">
+    <footer className="on-dark bg-navy-950 text-white">
       {/* Extra bottom padding on small screens keeps the sticky mobile CTA
           from covering the final line of footer content. */}
       <div className="container-wide pb-32 pt-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="font-display text-lg font-semibold tracking-tightest">SKY STAR</p>
-            <p className="mt-3 text-sm font-medium uppercase tracking-wideish text-white/65">
+            <p className="font-display text-lg font-bold uppercase tracking-[0.18em]">Sky Star</p>
+            <p className="mt-4 max-w-[26ch] text-sm leading-relaxed text-white/70">
               {siteConfig.tagline}
             </p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
@@ -20,15 +20,13 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3 lg:col-start-6">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">
-              Navigation
-            </p>
+            <p className="meta text-white/45">Navigation</p>
             <ul className="mt-4 space-y-3">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-sm text-white/75 transition-colors duration-150 hover:text-white"
+                    className="inline-flex min-h-[36px] items-center text-sm text-white/75 transition-colors duration-150 hover:text-accent-strong"
                   >
                     {item.label}
                   </a>
@@ -38,7 +36,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">Contact</p>
+            <p className="meta text-white/45">Contact</p>
             <ul className="mt-4 space-y-3 text-sm text-white/75">
               <li>
                 {isEmailConfigured ? (
@@ -63,11 +61,11 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-label text-white/60">Legal</p>
+            <p className="meta text-white/45">Legal</p>
             <ul className="mt-4 space-y-3 text-sm text-white/65">
               {footerContent.legalLinks.map((label) => (
-                <li key={label} title="Page pending — content not yet published">
-                  {label}
+                <li key={label} className="text-white/60">
+                  {label} <span className="text-white/35">[TBC]</span>
                 </li>
               ))}
             </ul>

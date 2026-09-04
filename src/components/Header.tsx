@@ -72,7 +72,7 @@ export function Header() {
       <header
         className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-250 ${
           scrolled || menuOpen
-            ? "border-navy-900/10 bg-white/95 shadow-subtle backdrop-blur"
+            ? "border-navy-900/10 bg-cream/95 shadow-subtle backdrop-blur"
             : "border-transparent bg-white/0"
         }`}
       >
@@ -83,9 +83,9 @@ export function Header() {
         >
           <a
             href="#top"
-            className="font-display text-lg font-semibold tracking-tightest text-navy-900 sm:text-xl"
+            className="flex min-h-[44px] items-center font-display text-base font-bold uppercase tracking-[0.18em] text-navy-900 sm:text-lg"
           >
-            SKY STAR
+            Sky Star
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
@@ -94,7 +94,7 @@ export function Header() {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-sm font-medium text-navy-900/80 transition-colors duration-150 hover:text-navy-900"
+                    className="relative flex min-h-[44px] items-center text-sm font-medium text-navy-900/75 transition-colors duration-150 hover:text-navy-900 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:w-0 after:bg-accent after:transition-[width] after:duration-250 hover:after:w-full"
                   >
                     {item.label}
                   </a>
@@ -152,18 +152,21 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-white lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-cream lg:hidden"
         >
           <nav aria-label="Mobile" className="container-content flex min-h-full flex-col py-10">
             <ul className="flex flex-col gap-1">
               {nav.map((item, index) => (
-                <li key={item.href} className="border-b border-navy-900/10">
+                <li key={item.href} className="border-b border-navy-900/12">
                   <a
                     ref={index === 0 ? firstLinkRef : undefined}
                     href={item.href}
                     onClick={closeMenu}
-                    className="flex min-h-[56px] items-center text-lg font-medium text-navy-900"
+                    className="flex min-h-[60px] items-center gap-5 font-display text-display-4 font-semibold text-navy-900"
                   >
+                    <span aria-hidden="true" className="tnum meta text-navy-900/30">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {item.label}
                   </a>
                 </li>

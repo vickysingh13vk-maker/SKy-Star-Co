@@ -15,7 +15,7 @@ export function Checkbox({ id, label, error, className = "", ...rest }: Checkbox
         <input
           id={id}
           type="checkbox"
-          className="mt-1 h-5 w-5 flex-shrink-0 rounded-sm border-2 border-navy-900/40 text-navy-900 focus-visible:ring-2 focus-visible:ring-navy-900/30"
+          className="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-2 border-navy-900/40 text-navy-900 focus-visible:ring-2 focus-visible:ring-navy-900/30"
           aria-describedby={errorId}
           aria-invalid={Boolean(error)}
           {...rest}

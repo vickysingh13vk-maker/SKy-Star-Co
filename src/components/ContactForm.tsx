@@ -137,12 +137,10 @@ export function ContactForm() {
         ref={successRef}
         role="status"
         tabIndex={-1}
-        className="rounded border border-navy-900/15 bg-white p-8 md:p-10"
+        className="py-2"
       >
-        <p className="text-xs font-semibold uppercase tracking-label text-accent">
-          Enquiry received
-        </p>
-        <h3 className="mt-3 font-display text-2xl font-medium text-navy-900">
+        <p className="meta text-accent">Enquiry received</p>
+        <h3 className="mt-4 font-display text-display-3 font-semibold text-navy-900">
           Thank you. Your requirement has been sent.
         </h3>
         <div className="mt-4 max-w-lg space-y-3 text-base leading-relaxed text-muted">
@@ -183,7 +181,7 @@ export function ContactForm() {
       )}
 
       <fieldset>
-        <legend className="font-display text-lg font-medium text-navy-900">Your Details</legend>
+        <legend className="meta w-full border-b border-navy-900/15 pb-3 text-navy-900">Your Details</legend>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
           <Field id="fullName" label="Full Name" required error={errors.fullName}>
             <input
@@ -247,7 +245,7 @@ export function ContactForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="font-display text-lg font-medium text-navy-900">Your Requirement</legend>
+        <legend className="meta w-full border-b border-navy-900/15 pb-3 text-navy-900">Your Requirement</legend>
         <div className="mt-6 grid gap-6">
           <Field
             id="requirement"

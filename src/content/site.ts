@@ -35,6 +35,13 @@ export const hero = {
   primaryCta: "Request a Quote",
   secondaryCta: "Chat on WhatsApp",
   highlights: ["Product Sourcing", "Trading Support", "Air & Sea Freight", "DDP Where Available"],
+  // Trade-desk metadata. Descriptive only — no claims, volumes or statistics.
+  meta: [
+    { label: "Desk", value: "HKG / Asia" },
+    { label: "Function", value: "Trade Desk" },
+    { label: "Ref.", value: "001" },
+  ],
+  route: ["Source", "Supply", "Deliver"],
 };
 
 export const trustStrip = [
@@ -94,23 +101,40 @@ export const whatWeSource = {
   eyebrow: "SELECTED SOURCING CATEGORIES",
   headline: ["Tell us what you need.", "Not what you see in a catalogue."],
   intro: "We work across selected product categories and assess each requirement individually.",
+  // Featured categories. `image` stays null until licensed photography is
+  // supplied — the gallery renders an art-directed slot in the meantime.
+  //
+  // Vape and atomizer products are deliberately absent: the approved brief
+  // requires them to stay off the public site unless management and legal
+  // explicitly approve an alternative treatment. Adding an entry here is all
+  // that is needed if that approval is ever given.
   anchorCategories: [
     {
-      heading: "Hardware & Consumer Products",
-      copy: "Products and accessories sourced according to your required specifications and commercial requirements.",
-    },
-    {
+      key: "led-lighting",
       heading: "LED Lighting",
       copy: "Lighting products and related solutions for commercial sourcing requirements.",
+      imageBrief: "Lighting product photography",
+      image: null as string | null,
     },
     {
-      heading: "Home Appliances",
-      copy: "Appliance sourcing based on product specifications, required quantity and destination.",
+      key: "toys",
+      heading: "Toys",
+      copy: "Toy sourcing assessed against your product specifications, required quantity and destination.",
+      imageBrief: "Toy product photography",
+      image: null as string | null,
+    },
+    {
+      key: "furniture",
+      heading: "Furniture",
+      copy: "Furniture sourced according to your required specifications and commercial requirements.",
+      imageBrief: "Furniture product photography",
+      image: null as string | null,
     },
   ],
   supportingCategories: [
+    "Hardware & Consumer Products",
+    "Home Appliances",
     "Building Materials",
-    "Furniture",
     "Mobile & Accessories",
     "Other Product Requirements",
   ],
@@ -121,42 +145,61 @@ export const whatWeSource = {
   },
 };
 
+// Brands are only rendered when approved logos have been supplied. Never add
+// a name or mark here without written approval — the brief forbids inventing
+// client names, logos or relationships.
+export const brands = {
+  eyebrow: "BRANDS WE WORK WITH",
+  headline: "Trusted relationships, built around the right products.",
+  // Drop logo files into /public/brands and add an entry per approved brand.
+  // `logo` is the path; `name` is used for the accessible name.
+  logos: [] as { name: string; logo: string; width: number; height: number }[],
+};
+
 export const howItWorks = {
+  // `stage` is the short route label used by the timeline rail.
   eyebrow: "OUR PROCESS",
   headline: "A clear route from requirement to delivery.",
   steps: [
     {
       number: "01",
+      stage: "Requirement",
       heading: "Send Your Requirement",
       copy: "Tell us what you are looking for, how much you need and where the goods need to go.",
     },
     {
       number: "02",
+      stage: "Review",
       heading: "We Review the Details",
       copy: "We assess the product, quantity, specifications and destination to understand your requirements.",
     },
     {
       number: "03",
+      stage: "Sourcing",
       heading: "We Explore Suitable Options",
       copy: "We work with relevant manufacturers and suppliers to identify suitable sourcing options.",
     },
     {
       number: "04",
+      stage: "Commercial Details",
       heading: "We Confirm the Commercial Details",
       copy: "Product specifications, quantities, pricing and other relevant requirements are discussed before the order moves forward.",
     },
     {
       number: "05",
+      stage: "Order",
       heading: "The Order Is Confirmed",
       copy: "Once the relevant details are agreed, the order can proceed.",
     },
     {
       number: "06",
+      stage: "Production",
       heading: "Production Is Coordinated",
       copy: "We remain involved while the supplier prepares the goods for shipment.",
     },
     {
       number: "07",
+      stage: "Delivery",
       heading: "Freight and Delivery",
       copy: "We coordinate the agreed shipping arrangement through to the destination.",
     },
@@ -208,6 +251,24 @@ export const about = {
     "In both cases, the process starts with the same thing:",
   ],
   emphasis: "Your requirement.",
+  // Each line restates approved copy from this section — nothing new is
+  // claimed here. "are" lines come from the registered-company and
+  // one-point-of-contact statements; "areNot" from the manufacturer,
+  // factory-ownership and fixed-catalogue statements.
+  contrast: {
+    areLabel: "What Sky Star is",
+    are: [
+      "A Hong Kong–registered trading and sourcing company.",
+      "One point of contact from requirement to delivery.",
+      "A partner that assesses each requirement individually.",
+    ],
+    areNotLabel: "What Sky Star is not",
+    areNot: [
+      "A manufacturer.",
+      "A factory owner.",
+      "A fixed product catalogue.",
+    ],
+  },
   closing: "Tell us what you need, where it needs to go and what matters to you. We will review the details and confirm how we can help.",
   cta: "Discuss Your Requirement",
 };

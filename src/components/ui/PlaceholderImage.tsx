@@ -1,23 +1,26 @@
-type Tone = "navy" | "charcoal" | "paper";
+type Tone = "navy" | "charcoal" | "deep";
 
-const toneStyles: Record<Tone, { background: string; grid: string; text: string; frame: string }> = {
+const toneStyles: Record<Tone, { background: string; grid: string; label: string; frame: string }> = {
   navy: {
-    background: "linear-gradient(160deg, #123353 0%, #0E2A47 45%, #081625 100%)",
-    grid: "rgba(255, 255, 255, 0.055)",
-    text: "text-white/60",
-    frame: "border-white/20",
-  },
-  charcoal: {
-    background: "linear-gradient(160deg, #2A2F35 0%, #1C1F23 55%, #101317 100%)",
+    background:
+      "radial-gradient(120% 90% at 78% 8%, #1B4470 0%, #123353 42%, #0B2038 72%, #081625 100%)",
     grid: "rgba(255, 255, 255, 0.05)",
-    text: "text-white/55",
+    label: "text-white/55",
     frame: "border-white/15",
   },
-  paper: {
-    background: "linear-gradient(160deg, #1B4470 0%, #123353 60%, #0E2A47 100%)",
-    grid: "rgba(255, 255, 255, 0.06)",
-    text: "text-white/60",
-    frame: "border-white/20",
+  charcoal: {
+    background:
+      "radial-gradient(120% 90% at 22% 10%, #2A323B 0%, #1D232A 45%, #14181D 100%)",
+    grid: "rgba(255, 255, 255, 0.045)",
+    label: "text-white/50",
+    frame: "border-white/12",
+  },
+  deep: {
+    background:
+      "radial-gradient(130% 100% at 50% 0%, #123353 0%, #0E2A47 40%, #081625 100%)",
+    grid: "rgba(255, 255, 255, 0.055)",
+    label: "text-white/55",
+    frame: "border-white/15",
   },
 };
 
@@ -27,13 +30,15 @@ interface PlaceholderImageProps {
   ratio?: string;
   className?: string;
   index?: string;
+  /** Small caption on the lower rule — e.g. a category name. */
+  caption?: string;
 }
 
 /**
- * Art-directed slot for production photography that does not exist yet.
- * Deliberately abstract — no stock imagery standing in for real port,
- * factory or product photography — and easy to swap for a next/image
- * element once the shoot is delivered.
+ * Art-directed slot standing in for production photography that does not
+ * exist yet. Deliberately abstract — no stock imagery pretending to be a real
+ * port, factory or product shoot — and sized so a next/image element can drop
+ * straight in once the shoot is delivered.
  */
 export function PlaceholderImage({
   label,
@@ -41,6 +46,7 @@ export function PlaceholderImage({
   ratio = "4 / 5",
   className = "",
   index,
+  caption,
 }: PlaceholderImageProps) {
   const t = toneStyles[tone];
 
@@ -51,35 +57,37 @@ export function PlaceholderImage({
       role="img"
       aria-label={`${label} — production photography pending`}
     >
+      {/* Engraved measure grid. */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
-          backgroundSize: "56px 56px",
+          backgroundSize: "64px 64px",
         }}
         aria-hidden="true"
       />
 
-      <div className={`absolute inset-5 border ${t.frame} md:inset-6`} aria-hidden="true">
-        <span className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-accent-strong" />
-        <span className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-accent-strong/60" />
+      {/* Registration marks, as on a printed trade document. */}
+      <div className={`absolute inset-4 border ${t.frame} md:inset-6`} aria-hidden="true">
+        <span className="absolute -left-px -top-px h-5 w-5 border-l border-t border-accent-strong/80" />
+        <span className="absolute -bottom-px -right-px h-5 w-5 border-b border-r border-accent-strong/50" />
       </div>
 
       {index && (
         <span
           aria-hidden="true"
-          className={`absolute left-9 top-9 font-display text-xs font-semibold tracking-label md:left-10 md:top-10 ${t.text}`}
+          className={`tnum absolute left-8 top-8 font-display text-label font-semibold ${t.label} md:left-10 md:top-10`}
         >
           {index}
         </span>
       )}
 
       <div
-        className="absolute inset-x-9 bottom-9 flex flex-wrap items-baseline justify-between gap-2 md:inset-x-10 md:bottom-10"
+        className="absolute inset-x-8 bottom-8 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 md:inset-x-10 md:bottom-10"
         aria-hidden="true"
       >
-        <p className={`text-xs font-semibold uppercase tracking-label ${t.text}`}>{label}</p>
-        <p className="text-[0.625rem] uppercase tracking-label text-white/30">Image slot</p>
+        <p className={`meta ${t.label}`}>{caption ?? label}</p>
+        <p className="meta text-label-sm text-white/30">Image slot</p>
       </div>
     </div>
   );

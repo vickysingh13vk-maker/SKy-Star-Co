@@ -10,12 +10,16 @@ const toneClasses = {
   accent: "text-accent",
 };
 
+const ruleClasses = {
+  navy: "bg-navy-700/45",
+  light: "bg-accent-strong",
+  accent: "bg-accent",
+};
+
 export function Eyebrow({ children, tone = "navy", className = "" }: EyebrowProps) {
   return (
-    <p
-      className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-label ${toneClasses[tone]} ${className}`}
-    >
-      <span className="h-px w-8 bg-current" aria-hidden="true" />
+    <p className={`meta flex items-center gap-3 ${toneClasses[tone]} ${className}`}>
+      <span className={`h-px w-10 flex-shrink-0 ${ruleClasses[tone]}`} aria-hidden="true" />
       {children}
     </p>
   );
