@@ -94,9 +94,12 @@
     @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded bg-navy-900 px-4 py-3 text-sm font-medium text-white transition-transform duration-200 focus:translate-y-0;
   }
 
-  /* Uppercase metadata used throughout — reference codes, eyebrows, labels. */
+  /* Uppercase metadata used throughout — reference codes, eyebrows, labels.
+     Monospace by design: it is the one place on the page that reads as
+     annotation rather than editorial voice, echoing the trade-document
+     language (desk metadata, ref codes) the rest of the site borrows from. */
   .meta {
-    @apply font-display text-label font-semibold uppercase;
+    @apply font-mono text-label font-medium uppercase;
   }
 
   .tnum {

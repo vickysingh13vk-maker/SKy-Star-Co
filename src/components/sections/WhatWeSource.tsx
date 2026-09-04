@@ -1,4 +1,4 @@
-import { whatWeSource } from "@/content/site";
+import { whatWeSource, SHOW_VAPE, vapeCategory } from "@/content/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Media } from "@/components/ui/Media";
 import { Reveal } from "@/components/ui/Reveal";
@@ -22,15 +22,32 @@ const composition = [
     sizes: "(min-width: 1024px) 40vw, 100vw",
   },
   {
-    wrapper: "lg:col-span-8 lg:col-start-5 lg:-mt-8",
+    // Explicit row-start: with a 4th tile below (vape, once published) sharing
+    // this row at columns 1-4, sparse grid packing would place both
+    // correctly on its own, but pinning the row keeps the composition
+    // deterministic rather than relying on that packing behaviour.
+    wrapper: "lg:col-span-8 lg:col-start-5 lg:row-start-2 lg:-mt-8",
     ratio: "4 / 3",
     lgRatio: "16 / 9",
     headingClass: "text-display-2",
     sizes: "(min-width: 1024px) 64vw, 100vw",
   },
+  {
+    // Vape, when SHOW_VAPE is on — a smaller fourth tile closing the same
+    // row as the wide one above, rather than reusing the hero layout.
+    wrapper: "lg:col-span-4 lg:col-start-1 lg:row-start-2",
+    ratio: "4 / 3",
+    lgRatio: "1 / 1",
+    headingClass: "text-display-4",
+    sizes: "(min-width: 1024px) 32vw, 100vw",
+  },
 ];
 
 export function WhatWeSource() {
+  const categories = SHOW_VAPE
+    ? [...whatWeSource.anchorCategories, vapeCategory]
+    : whatWeSource.anchorCategories;
+
   return (
     <section id="what-we-source" aria-labelledby="what-we-source-heading" className="section-y bg-paper">
       <div className="container-wide">
@@ -55,7 +72,7 @@ export function WhatWeSource() {
         </div>
 
         <div className="mt-14 grid gap-y-14 md:mt-20 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-20">
-          {whatWeSource.anchorCategories.map((category, index) => {
+          {categories.map((category, index) => {
             const layout = composition[index] ?? composition[0]!;
             const number = String(index + 1).padStart(2, "0");
 

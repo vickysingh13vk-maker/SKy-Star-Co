@@ -145,6 +145,22 @@ export const whatWeSource = {
   },
 };
 
+// Prepared and reviewed, but not published: the approved brief requires
+// management and legal sign-off before vape/atomizer content appears on the
+// public site, and that has not been given. Flip SHOW_VAPE to true — and
+// only that — once approval is confirmed; WhatWeSource picks it up
+// automatically. No regulatory, licensing or compliance claims are made here
+// on purpose: none have been approved either.
+export const SHOW_VAPE = false;
+
+export const vapeCategory = {
+  key: "vape",
+  heading: "Vape",
+  copy: "Vape and atomizer hardware sourced according to your product specifications, required quantity and destination, assessed individually for each order.",
+  imageBrief: "Vape hardware product photography",
+  image: null as string | null,
+};
+
 // Brands are only rendered when approved logos have been supplied. Never add
 // a name or mark here without written approval — the brief forbids inventing
 // client names, logos or relationships.

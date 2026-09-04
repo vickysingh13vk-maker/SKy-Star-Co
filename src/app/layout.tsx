@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Fraunces, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/content/site";
 
-// Self-hosted latin subsets of the Inter families (SIL Open Font License).
+// Self-hosted latin subset of Inter (SIL Open Font License) — body copy and UI.
 const inter = localFont({
   src: "./fonts/inter-latin-wght-normal.woff2",
   variable: "--font-inter",
@@ -12,11 +13,27 @@ const inter = localFont({
   preload: true,
 });
 
-const interTight = localFont({
-  src: "./fonts/inter-tight-latin-wght-normal.woff2",
-  variable: "--font-inter-tight",
+// Editorial display serif for headings and large numerals. next/font/google
+// downloads and self-hosts the font at build time — no runtime request to
+// Google, same as the Inter files above. Fraunces is a variable font with an
+// optical-size axis, so it sharpens automatically at hero sizes and softens
+// at heading sizes without any per-component tuning.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
   display: "swap",
-  weight: "100 900",
+  axes: ["opsz", "SOFT", "WONK"],
+  preload: true,
+});
+
+// Monospace for the "trade documentation" register — eyebrows, uppercase
+// labels, reference codes, desk metadata. Deliberately distinct from the
+// heading and body faces so labels read as annotation rather than heading.
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "600"],
   preload: true,
 });
 
@@ -101,7 +118,7 @@ const jsonLd = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${inter.variable} ${interTight.variable}`}>
+    <html lang="en-GB" className={`${inter.variable} ${fraunces.variable} ${ibmPlexMono.variable}`}>
       <head>
         <script
           type="application/ld+json"

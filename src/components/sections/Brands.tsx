@@ -3,13 +3,16 @@ import { brands } from "@/content/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 
+const PLACEHOLDER_SLOTS = 6;
+
 /**
- * Renders only once approved logos exist in `brands.logos`. The brief forbids
- * inventing client names, logos or relationships, so an empty list means the
- * section stays off the page entirely rather than shipping placeholder marks.
+ * Renders real logos once approved ones exist in `brands.logos`. Until then
+ * it shows honest placeholder slots rather than staying off the page or
+ * inventing marks — the brief forbids fake client names or logos, but an
+ * empty section reads as unfinished rather than pending.
  */
 export function Brands() {
-  if (brands.logos.length === 0) return null;
+  const hasLogos = brands.logos.length > 0;
 
   return (
     <section id="brands" aria-labelledby="brands-heading" className="section-y-tight bg-white">
@@ -24,6 +27,11 @@ export function Brands() {
               >
                 {brands.headline}
               </h2>
+              {!hasLogos && (
+                <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
+                  Approved brand relationships will appear here as they are confirmed.
+                </p>
+              )}
             </Reveal>
           </div>
 
@@ -32,20 +40,30 @@ export function Brands() {
               {/* Cells carry their own hairlines; the negative offsets clip the
                   outer ones so the rules stay correct at any column count. */}
               <ul className="-ml-px -mt-px grid grid-cols-2 overflow-hidden sm:grid-cols-3">
-                {brands.logos.map((brand) => (
-                  <li
-                    key={brand.name}
-                    className="flex min-h-[7rem] items-center justify-center border-l border-t border-navy-900/12 p-6"
-                  >
-                    <Image
-                      src={brand.logo}
-                      alt={brand.name}
-                      width={brand.width}
-                      height={brand.height}
-                      className="h-auto max-h-10 w-auto opacity-70 grayscale transition duration-250 hover:opacity-100 hover:grayscale-0"
-                    />
-                  </li>
-                ))}
+                {hasLogos
+                  ? brands.logos.map((brand) => (
+                      <li
+                        key={brand.name}
+                        className="flex min-h-[7rem] items-center justify-center border-l border-t border-navy-900/12 p-6"
+                      >
+                        <Image
+                          src={brand.logo}
+                          alt={brand.name}
+                          width={brand.width}
+                          height={brand.height}
+                          className="h-auto max-h-10 w-auto opacity-70 grayscale transition duration-250 hover:opacity-100 hover:grayscale-0"
+                        />
+                      </li>
+                    ))
+                  : Array.from({ length: PLACEHOLDER_SLOTS }).map((_, i) => (
+                      <li
+                        key={i}
+                        aria-hidden="true"
+                        className="flex min-h-[7rem] items-center justify-center border-l border-t border-navy-900/12 p-6"
+                      >
+                        <span className="h-6 w-24 rounded-sm bg-navy-900/[0.06]" />
+                      </li>
+                    ))}
               </ul>
             </Reveal>
           </div>

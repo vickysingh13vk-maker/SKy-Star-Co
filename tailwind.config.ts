@@ -43,18 +43,21 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "-apple-system", "Segoe UI", "sans-serif"],
-        display: ["var(--font-inter-tight)", "-apple-system", "Segoe UI", "sans-serif"],
+        // Editorial serif for headings and large numerals.
+        display: ["var(--font-fraunces)", "Georgia", "Cambria", "serif"],
+        // Uppercase labels, eyebrows, reference codes, desk metadata.
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
         // Fluid editorial scale. Every heading on the site comes from here so
         // the hierarchy stays consistent across breakpoints.
-        "display-1": ["clamp(2.625rem, 1.75rem + 4.1vw, 5.25rem)", { lineHeight: "0.96", letterSpacing: "-0.035em" }],
-        "display-2": ["clamp(2rem, 1.5rem + 2.5vw, 3.625rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
-        "display-3": ["clamp(1.5rem, 1.28rem + 1.1vw, 2.125rem)", { lineHeight: "1.1", letterSpacing: "-0.022em" }],
-        "display-4": ["clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem)", { lineHeight: "1.25", letterSpacing: "-0.015em" }],
+        "display-1": ["clamp(2.625rem, 1.75rem + 4.1vw, 5.25rem)", { lineHeight: "0.98", letterSpacing: "-0.015em" }],
+        "display-2": ["clamp(2rem, 1.5rem + 2.5vw, 3.625rem)", { lineHeight: "1.04", letterSpacing: "-0.012em" }],
+        "display-3": ["clamp(1.5rem, 1.28rem + 1.1vw, 2.125rem)", { lineHeight: "1.12", letterSpacing: "-0.008em" }],
+        "display-4": ["clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem)", { lineHeight: "1.28", letterSpacing: "-0.006em" }],
         // Large process/reason numerals.
-        numeral: ["clamp(3.25rem, 2rem + 5.6vw, 7rem)", { lineHeight: "0.82", letterSpacing: "-0.05em" }],
-        "numeral-sm": ["clamp(2rem, 1.5rem + 2.2vw, 3.25rem)", { lineHeight: "0.85", letterSpacing: "-0.045em" }],
+        numeral: ["clamp(3.25rem, 2rem + 5.6vw, 7rem)", { lineHeight: "0.85", letterSpacing: "-0.02em" }],
+        "numeral-sm": ["clamp(2rem, 1.5rem + 2.2vw, 3.25rem)", { lineHeight: "0.88", letterSpacing: "-0.018em" }],
         lead: ["clamp(1.0625rem, 1rem + 0.35vw, 1.25rem)", { lineHeight: "1.62" }],
         label: ["0.6875rem", { lineHeight: "1.2", letterSpacing: "0.14em" }],
         "label-sm": ["0.625rem", { lineHeight: "1.2", letterSpacing: "0.16em" }],

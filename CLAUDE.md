@@ -15,10 +15,13 @@ All copy lives in `src/content/site.ts` — edit it there, not in components.
 
 Two things in that file are gated on approval and must stay that way:
 
-- `whatWeSource.anchorCategories` deliberately omits vape/atomizer products.
-- `brands.logos` is empty, so the "Brands we work with" section does not
-  render. Only add entries for logos and names that have been supplied and
-  approved in writing.
+- Vape/atomizer copy lives in `vapeCategory`, fully written, but is only
+  spliced into the sourcing gallery when `SHOW_VAPE` is `true`. It defaults
+  to `false`. Do not flip it without explicit management/legal sign-off —
+  that is the one rule in the brief marked non-negotiable.
+- `brands.logos` is empty. The Brands section renders honest placeholder
+  tiles until real logos are added — never invented names or marks. Only add
+  entries for logos and names supplied and approved in writing.
 
 Photography goes through `src/components/ui/Media.tsx`: set the category's
 `image` to a path under `/public` and it swaps the art-directed slot for a
@@ -39,6 +42,14 @@ real `next/image`. No other change is needed.
 - Headings come from the fluid `fontSize` scale in `tailwind.config.ts`
   (`display-1`…`display-4`, `numeral`, `numeral-sm`, `lead`, `label`). Do not
   hand-roll a `clamp()` in a component — add to the scale instead.
+- Three faces, three jobs: `font-sans` (Inter) is body copy and UI chrome;
+  `font-display` (Fraunces, a variable serif) is every heading and large
+  numeral; `font-mono` (IBM Plex Mono) is `.meta` — eyebrows, uppercase
+  labels, reference codes. All three are self-hosted (Inter via
+  `next/font/local`, Fraunces and IBM Plex Mono via `next/font/google`, which
+  downloads and serves them at build time — no runtime Google request).
+  Don't reach for a fourth face; if a heading needs a different weight or
+  size, add to the `fontSize` scale instead.
 - `.meta` (uppercase metadata), `.tnum` (tabular figures), `.rule-grid` /
   `.rule-grid-dark` (hairline column overlays) and `.row-editorial` (the shared
   list-row hover rule) live in `globals.css`. Reuse them rather than
